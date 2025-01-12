@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title th:text="${title}">Gestión de Negocios</title>
+    </head>
+    <body>
+        <header>
+            <h1 th:text="${title}">Gestión de Negocios</h1>
+        </header>
+
+        <script src="/js/business-actions.js"></script>
+
+        <form th:action="@{/business/search}" method="get" class="search-form">
+            <input type="text" name="name" placeholder="Buscar negocio..." 
+                   th:value="${searchName}" />
+            <button type="submit">Buscar</button>
+        </form>
+        
+        <form th:action="@{/business/invoices}" method="get" class="search-form">
+            <input type="text" name="businessId" placeholder="Business ID" required />
+            <input type="text" name="date" required />
+            <button type="submit">Buscar Facturas</button>
+        </form>
+
+        <main>
+            <p th:text="${description}">Bienvenido a la sección de gestión de negocios.</p>
+            <p>Aquí podrás gestionar todos los aspectos relacionados con tus negocios.</p>
+
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Business ID</th>
+                        <th>Nombre</th>
+                        <th>Dirección</th>
+                        <th>Ciudad</th>
+                        <th>Estado</th>
+                        <th>Estrellas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="business : ${businesses}">
+                        <td th:text="${business.businessId}"></td>
+                        <td th:text="${business.name}"></td>
+                        <td th:text="${business.address}"></td>
+                        <td th:text="${business.city}"></td>
+                        <td th:text="${business.state}"></td>
+                        <td th:text="${business.stars}"></td>
+                        <td>
+                            <input type="radio" name="selectedBusiness" th:value="${business.id}" 
+                                   th:attr="data-name=${business.name}" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div id="actions" style="margin-top: 20px;">
+                <button disabled id="updateButton">Modificar</button>
+                <button disabled id="deleteButton">Eliminar</button>
+                <a href="/business/create">Crear nuevo Negocio</a>
+            </div>
+
+            <!-- Paginación -->
+            <div>
+                <span th:text="'Página ' + ${currentPage + 1} + ' de ' + ${totalPages}"></span>
+                <a th:href="@{/business/home(size=${10}, page=${currentPage - 1})}" 
+                   th:if="${currentPage > 0}">Anterior</a>
+                <a th:href="@{/business/home(size=${10}, page=${currentPage + 1})}" 
+                   th:if="${currentPage < totalPages - 1}">Siguiente</a>
+            </div>
+
+        </main>
+
+        <footer>
+            <p>&copy; 2024 AGI</p>
+        </footer>
+    </body>
+</html>

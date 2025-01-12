@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Página Principal</title>
+        <link rel="stylesheet" href="/css/styles.css">
+    </head>
+    <body>
+        <header>
+            <h1 th:text="${message} ?: 'Bienvenido a la página principal'"></h1>
+        </header>
+
+        <nav>
+            <ul>
+                <li>
+                    <a th:href="@{/business/home}">Gestión de negocios</a>
+                </li>
+                <li>
+                    <a th:href="@{/checkin/home}">Gestión de facturas</a>
+                </li>
+                <li>
+                    <a th:href="@{/review/home}">Gestión de reseñas</a>
+                </li>
+                <li>
+                    <a th:href="@{/tip/home}">Gestión de consejos</a>
+                </li>
+                <li>
+                    <a th:href="@{/user/home}">Gestión de usuarios</a>
+                </li>
+            </ul>
+        </nav>
+
+        <main>
+            <p>Esta es la página principal de nuestra aplicación. ¡Explora nuestros servicios!</p>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 AGI</p>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title th:text="${title}">Modificar Factura</title>
+    </head>
+    <body>
+        <header>
+            <h1 th:text="${title}">Modificar Factura</h1>
+        </header>
+
+        <main>
+            <form th:action="@{/checkin/update}" th:object="${checkin}" method="post">
+                <input type="hidden" th:field="*{id}" />
+
+                <div>
+                    <label for="businessId">ID del Negocio:</label>
+                    <input type="text" id="businessId" th:field="*{businessId}" readonly />
+                </div>
+                <div>
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" th:field="*{date}" required />
+                </div>
+
+                <button type="submit">Modificar</button>
+            </form>
+
+            <p th:if="${successMessage}" th:text="${successMessage}" style="color: green;"></p>
+            <p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></p>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 AGI</p>
+        </footer>
+    </body>
+</html>
+

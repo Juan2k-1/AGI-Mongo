@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title th:text="${title}">Gestión de Reseñas</title>
+    </head>
+    <body>
+        <header>
+            <h1 th:text="${title}">Gestión de Reseñas</h1>
+        </header>
+
+        <script src="/js/review-actions.js"></script>
+
+        <!-- Formulario para buscar reseñas por usuario y fecha -->
+        <form th:action="@{/review/searchByUserAndDate}" method="get" class="search-form">
+            <label for="userId">ID Usuario:</label>
+            <input type="text" name="userId" id="userId" placeholder="Introduce el ID de usuario" required />
+
+            <label for="date">Fecha:</label>
+            <input type="text" name="date" id="date" required />
+
+            <button type="submit">Buscar por Usuario y Fecha</button>
+        </form>
+
+        <form th:action="@{/review/search}" method="get" class="search-form">
+            <input type="text" name="user" placeholder="Buscar reseña..." 
+                   th:value="${searchUser}" />
+            <button type="submit">Buscar</button>
+        </form>
+
+        <main>
+            <p th:text="${description}">Bienvenido a la sección de gestión de reseñas.</p>
+            <p>Aquí podrás gestionar todos los aspectos relacionados con tus reseñas.</p>
+
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>ID Review</th>
+                        <th>ID Usuario</th>
+                        <th>ID Negocio</th>
+                        <th>Stars</th>
+                        <th>Useful</th>
+                        <th>Funny</th>
+                        <th>Cool</th>
+                        <th>Text</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="review : ${reviews}">
+                        <td th:text="${review.reviewId}"></td>
+                        <td th:text="${review.userId}"></td>
+                        <td th:text="${review.businessId}"></td>
+                        <td th:text="${review.stars}"></td>
+                        <td th:text="${review.useful}"></td>
+                        <td th:text="${review.funny}"></td>
+                        <td th:text="${review.cool}"></td>
+                        <td th:text="${review.text}"></td>
+                        <td th:text="${review.date}"></td>
+                        <td>
+                            <input type="radio" name="selectedReview" th:value="${review.id}" 
+                                   th:attr="data-name=${review.id}" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div id="actions" style="margin-top: 20px;">
+                <button disabled id="updateButton">Modificar</button>
+                <button disabled id="deleteButton">Eliminar</button>
+                <a href="/review/create">Crear nueva Reseña</a>
+            </div>
+
+            <!-- Paginación -->
+            <div>
+                <span th:text="'Página ' + ${currentPage + 1} + ' de ' + ${totalPages}"></span>
+                <a th:href="@{/review/home(size=${10}, page=${currentPage - 1})}" 
+                   th:if="${currentPage > 0}">Anterior</a>
+                <a th:href="@{/review/home(size=${10}, page=${currentPage + 1})}" 
+                   th:if="${currentPage < totalPages - 1}">Siguiente</a>
+            </div>
+
+        </main>
+
+        <footer>
+            <p>&copy; 2024 AGI</p>
+        </footer>
+    </body>
+</html>

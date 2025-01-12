@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Crear Nueva Reseña</title>
+    </head>
+    <body>
+        <header>
+            <h1>Crear Nueva Reseña</h1>
+        </header>
+
+        <main>
+            
+            <!-- Mostrar el mensaje de éxito o error si está presente -->
+            <div th:if="${successMessage}" class="alert alert-success">
+                <p th:text="${successMessage}"></p>
+            </div>
+            <div th:if="${errorMessage}" class="alert alert-danger">
+                <p th:text="${errorMessage}"></p>
+            </div>
+            
+            <form action="/review/create" method="post" th:object="${review}">
+                
+                <div>
+                    <label for="reviewId">ID de la reseña:</label>
+                    <input type="text" id="reviewId" th:field="*{reviewId}" required/>
+                </div>
+                <div>
+                    <label for="userId">ID del Usuario:</label>
+                    <input type="text" id="userId" th:field="*{userId}" required/>
+                </div>
+                <div>
+                    <label for="businessId">ID del Negocio:</label>
+                    <input type="text" id="businessId" th:field="*{businessId}" required/>
+                </div>              
+                <div>
+                    <label for="stars">Estrellas:</label>
+                    <input type="number" step="0.1" min="0" max="5" id="stars" th:field="*{stars}" required/>
+                </div>
+                <div>
+                    <label for="useful">Utilidad:</label>
+                    <input type="number" min="0" id="useful" th:field="*{useful}" required/>
+                </div>
+                <div>
+                    <label for="funny">Gracioso:</label>
+                    <input type="number" min="0" id="funny" th:field="*{funny}" required/>
+                </div>
+                <div>
+                    <label for="cool">Divertido:</label>
+                    <input type="number" min="0" id="cool" th:field="*{cool}" required/>
+                </div>
+                <div>
+                    <label for="text">Texto:</label>
+                    <input type="text" id="text" th:field="*{text}" required/>
+                </div>
+                <div>
+                    <label for="date">Date:</label>
+                    <input type="datetime-local" id="date" th:field="*{date}" th:value="*{date}" required />
+                </div>             
+
+                <div>
+                    <button type="submit">Crear Reseña</button>
+                </div>
+            </form>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 AGI</p>
+        </footer>
+    </body>
+</html>

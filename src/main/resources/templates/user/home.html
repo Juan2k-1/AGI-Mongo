@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title th:text="${title}">Gestión de Usuarios</title>
+    </head>
+    <body>
+        <header>
+            <h1 th:text="${title}">Gestión de Usuarios</h1>
+        </header>
+
+        <script src="/js/user-actions.js"></script>
+
+        <!-- Formulario de búsqueda -->
+        <form th:action="@{/user/search}" method="get" class="search-form">
+            <input type="text" name="user" placeholder="Buscar usuario por nombre..." 
+                   th:value="${searchUser}" />
+            <button type="submit">Buscar</button>
+        </form>
+
+        <main>
+            <p th:text="${description}">Bienvenido a la sección de gestión de usuarios.</p>
+            <p>Aquí podrás gestionar todos los aspectos relacionados con los usuarios.</p>
+
+            <!-- Tabla de usuarios -->
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Fecha de Registro</th>
+                        <th>Recuento de Reseñas</th>
+                        <th>Útil</th>
+                        <th>Divertido</th>
+                        <th>Genial</th>
+                        <th>Estrellas Promedio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.id}"></td>
+                        <td th:text="${user.name}"></td>
+                        <td th:text="${user.yelpingSince}"></td>
+                        <td th:text="${user.reviewCount}"></td>
+                        <td th:text="${user.useful}"></td>
+                        <td th:text="${user.funny}"></td>
+                        <td th:text="${user.cool}"></td>
+                        <td th:text="${user.averageStars}"></td>
+                        <td>
+                            <input type="radio" name="selectedUser" th:value="${user.id}" 
+                                   th:attr="data-name=${user.id}" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Botón para crear un nuevo usuario -->
+            <div id="actions" style="margin-top: 20px;">
+                <button disabled id="updateButton">Modificar</button>
+                <button disabled id="deleteButton">Eliminar</button>
+                <a href="/user/create">Crear nuevo usuario</a>
+            </div>
+
+            <!-- Paginación -->
+            <div>
+                <span th:text="'Página ' + (${currentPage + 1}) + ' de ' + ${totalPages}"></span>
+                <a th:href="@{/user/home(size=${10}, page=${currentPage - 1})}" 
+                   th:if="${currentPage > 0}">Anterior</a>
+                <a th:href="@{/user/home(size=${10}, page=${currentPage + 1})}" 
+                   th:if="${currentPage < totalPages - 1}">Siguiente</a>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 AGI</p>
+        </footer>
+    </body>
+</html>

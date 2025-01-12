@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Facturas de Negocio</title>
+    </head>
+    <body>
+        <header>
+            <h1>Facturas de Negocio</h1>
+        </header>
+
+        <div th:if="${successMessage}" style="color: green;">
+            <p th:text="${successMessage}"></p>
+        </div>
+
+        <div th:if="${errorMessage}" style="color: red;">
+            <p th:text="${errorMessage}"></p>
+        </div>
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Factura ID</th>
+                    <th>Fechas</th>                  
+                    <th>Business ID</th>
+                    <th>Nombre de Negocio</th>
+                    <th>Dirección</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="invoice : ${invoices}">
+                    <!-- ID de la factura -->
+                    <td th:text="${invoice.invoiceDetails.invoiceId}"></td>
+                    <!-- Fecha de la factura -->
+                    <td th:text="${invoice.invoiceDetails.invoiceDates}"></td>
+                    <!-- ID del negocio -->
+                    <td th:text="${invoice.businessId}"></td>
+                    <!-- Nombre del negocio -->
+                    <td th:text="${invoice.name}"></td>
+                    <!-- Dirección del negocio -->
+                    <td th:text="${invoice.address}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <footer>
+            <p>&copy; 2024 AGI</p>
+        </footer>
+    </body>
+</html>

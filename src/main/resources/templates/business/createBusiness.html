@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Crear Nuevo Negocio</title>
+    </head>
+    <body>
+        <header>
+            <h1>Crear Nuevo Negocio</h1>
+        </header>
+
+        <main>
+            
+            <!-- Mostrar el mensaje de éxito o error si está presente -->
+            <div th:if="${successMessage}" class="alert alert-success">
+                <p th:text="${successMessage}"></p>
+            </div>
+            <div th:if="${errorMessage}" class="alert alert-danger">
+                <p th:text="${errorMessage}"></p>
+            </div>
+            
+            <form action="/business/create" method="post" th:object="${business}">
+                <div>
+                    <label for="businessId">Business ID</label>
+                    <input type="text" id="businessId" th:field="*{businessId}" required />
+                </div>
+                <div>
+                    <label for="name">Nombre del Negocio</label>
+                    <input type="text" id="name" th:field="*{name}" required />
+                </div>
+                <div>
+                    <label for="address">Dirección</label>
+                    <input type="text" id="address" th:field="*{address}" required />
+                </div>
+                <div>
+                    <label for="city">Ciudad</label>
+                    <input type="text" id="city" th:field="*{city}" required />
+                </div>
+                <div>
+                    <label for="state">Estado</label>
+                    <input type="text" id="state" th:field="*{state}" required />
+                </div>
+                <div>
+                    <label for="postalCode">Código Postal</label>
+                    <input type="text" id="postalCode" th:field="*{postalCode}" required />
+                </div>
+                <div>
+                    <label for="latitude">Latitud</label>
+                    <input type="number" step="0.000001" id="latitude" th:field="*{latitude}" required />
+                </div>
+                <div>
+                    <label for="longitude">Longitud</label>
+                    <input type="number" step="0.000001" id="longitude" th:field="*{longitude}" required />
+                </div>
+                <div>
+                    <label for="stars">Estrellas</label>
+                    <input type="number" step="0.1" min="0" max="5" id="stars" th:field="*{stars}" required />
+                </div>
+                <div>
+                    <label for="reviewCount">Número de Reseñas</label>
+                    <input type="number" min="0" id="reviewCount" th:field="*{reviewCount}" required />
+                </div>
+                <div>
+                    <label for="isOpen">Estado de Apertura</label>
+                    <input type="number" min="0" max="1" id="isOpen" th:field="*{isOpen}" required />
+                </div>
+
+                <div>
+                    <button type="submit">Crear Negocio</button>
+                </div>
+            </form>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 AGI</p>
+        </footer>
+    </body>
+</html>
+

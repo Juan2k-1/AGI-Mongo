@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Crear Nueva Factura</title>
+    </head>
+    <body>
+        <header>
+            <h1>Crear Nueva Factura</h1>
+        </header>
+
+        <main>
+            
+            <!-- Mostrar el mensaje de éxito o error si está presente -->
+            <div th:if="${successMessage}" class="alert alert-success">
+                <p th:text="${successMessage}"></p>
+            </div>
+            <div th:if="${errorMessage}" class="alert alert-danger">
+                <p th:text="${errorMessage}"></p>
+            </div>
+            
+            <form action="/checkin/create" method="post" th:object="${checkin}">
+                <div>
+                    <label for="businessId">Business ID</label>
+                    <input type="text" id="businessId" th:field="*{businessId}" required />
+                </div>
+                <div>
+                    <label for="date">Fecha de la factura</label>
+                    <input type="date" id="date" th:field="*{date}" required />
+                </div>                
+
+                <div>
+                    <button type="submit">Crear Factura</button>
+                </div>
+            </form>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 AGI</p>
+        </footer>
+    </body>
+</html>

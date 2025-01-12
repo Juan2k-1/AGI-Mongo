@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title th:text="${title}">Gestión de Facturas</title>
+    </head>
+    <body>
+        <header>
+            <h1 th:text="${title}">Gestión de Facturas</h1>
+        </header>
+
+        <script src="/js/checkin-actions.js"></script>
+        
+        <form th:action="@{/checkin/search}" method="get" class="search-form">
+            <input type="text" name="business" placeholder="Buscar factura..." 
+                   th:value="${searchBusiness}" />
+            <button type="submit">Buscar</button>
+        </form>
+
+        <main>
+            <p th:text="${description}">Bienvenido a la sección de gestión de facturas.</p>
+            <p>Aquí podrás gestionar todos los aspectos relacionados con tus facturas.</p>
+
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Business ID</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="checkin : ${checkins}">
+                        <td th:text="${checkin.businessId}"></td>
+                        <td th:text="${checkin.date}"></td>
+                        <td>
+                            <input type="radio" name="selectedCheckin" th:value="${checkin.id}" 
+                                   th:attr="data-name=${checkin.id}" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div id="actions" style="margin-top: 20px;">
+                <button disabled id="updateButton">Modificar</button>
+                <button disabled id="deleteButton">Eliminar</button>
+                <a href="/checkin/create">Crear nueva Factura</a>
+            </div>
+
+            <!-- Paginación -->
+            <div>
+                <span th:text="'Página ' + ${currentPage + 1} + ' de ' + ${totalPages}"></span>
+                <a th:href="@{/checkin/home(size=${10}, page=${currentPage - 1})}" 
+                   th:if="${currentPage > 0}">Anterior</a>
+                <a th:href="@{/checkin/home(size=${10}, page=${currentPage + 1})}" 
+                   th:if="${currentPage < totalPages - 1}">Siguiente</a>
+            </div>
+
+        </main>
+
+        <footer>
+            <p>&copy; 2024 AGI</p>
+        </footer>
+    </body>
+</html>
