@@ -143,4 +143,30 @@ public class ReviewController
         return modelAndView;
     }
 
+    @GetMapping("/searchByKeyword")
+    public ModelAndView searchReviews(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String keywords,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size)
+    {
+        ModelAndView modelAndView = new ModelAndView("review/searchByKeyword");
+        Page<Review> reviewsPage;
+
+        if (keyword != null) {
+            reviewsPage = reviewService.searchReviewsByKeyword(keyword, page, size);
+        } else if (keywords != null) {
+            reviewsPage = reviewService.searchReviewsByKeywords(keywords, page, size);
+        } else {
+            reviewsPage = Page.empty(); // No hay búsqueda
+        }
+
+        modelAndView.addObject("reviewsPage", reviewsPage);
+        modelAndView.addObject("currentPage", page);
+        modelAndView.addObject("totalPages", reviewsPage.getTotalPages());
+        modelAndView.addObject("totalItems", reviewsPage.getTotalElements());
+
+        return modelAndView;
+    }
+
 }

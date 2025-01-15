@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title th:text="${title}">Gestión de Reseñas</title>
+        <meta charset="UTF-8">      
     </head>
     <body>
         <header>
@@ -13,7 +12,7 @@
         <script src="/js/review-actions.js"></script>
 
         <!-- Formulario para buscar reseñas por usuario y fecha -->
-        <form th:action="@{/review/searchByUserAndDate}" method="get" class="search-form">
+        <form th:action="@{/review/searchByUserAndDate}" method="get">
             <label for="userId">ID Usuario:</label>
             <input type="text" name="userId" id="userId" placeholder="Introduce el ID de usuario" required />
 
@@ -23,7 +22,7 @@
             <button type="submit">Buscar por Usuario y Fecha</button>
         </form>
 
-        <form th:action="@{/review/search}" method="get" class="search-form">
+        <form th:action="@{/review/search}" method="get">
             <input type="text" name="user" placeholder="Buscar reseña..." 
                    th:value="${searchUser}" />
             <button type="submit">Buscar</button>
@@ -81,6 +80,12 @@
                    th:if="${currentPage < totalPages - 1}">Siguiente</a>
             </div>
 
+            <!-- Botón para buscar por palabra clave -->
+            <div style="margin-top: 20px; text-align: center;">
+                <form th:action="@{/review/searchByKeyword}" method="get">
+                    <button type="submit" style="padding: 10px 20px; font-size: 16px;">Buscar por Palabra Clave</button>
+                </form>
+            </div>
         </main>
 
         <footer>

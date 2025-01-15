@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="${title}">Modificar Tip</title>
+        <meta charset="UTF-8">       
+    </head>
+    <body>
+        <header>
+            <h1 th:text="${title}">Modificar Tip</h1>
+        </header>
+
+        <main>
+            <form th:action="@{/tip/update}" th:object="${tip}" method="post">
+                <!-- Campo oculto para el ID del Tip -->
+                <input type="hidden" th:field="*{id}" />
+                
+                <div>
+                    <label for="userId">ID del usuario:</label>
+                    <input type="text" id="userId" th:field="*{userId}" readonly />
+                </div>
+                <div>
+                    <label for="businessId">ID del usuario:</label>
+                    <input type="text" id="businessId" th:field="*{businessId}" readonly />
+                </div>
+                <div>
+                    <label for="text">Texto del Tip:</label>
+                    <textarea id="text" th:field="*{text}" rows="4" required></textarea>
+                </div>
+                <div>
+                    <label for="date">Fecha:</label>
+                    <input type="datetime-local" id="date" th:field="*{date}" readonly/>
+                </div>
+                <div>
+                    <label for="complimentCount">Cantidad de Halagos:</label>
+                    <input type="number" min="0" id="complimentCount" th:field="*{complimentCount}"/>
+                </div>
+
+                <button type="submit">Modificar</button>
+            </form>
+
+            <!-- Mostrar mensajes de éxito o error -->
+            <p th:if="${successMessage}" th:text="${successMessage}" style="color: green;"></p>
+            <p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></p>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 AGI</p>
+        </footer>
+    </body>
+</html>

@@ -87,8 +87,15 @@ public interface ReviewRepository extends MongoRepository<Review, String>
 
     @Override
     public <S extends Review> Optional<S> findOne(Example<S> example);
-    
+
     @Query("{'user_id' : ?0}")
     Page<Review> findByUserIdContainingIgnoreCase(String userId, Pageable pageable);
 
+    // Consulta 1: Buscar palabras clave en el campo 'text' con paginación
+    @Query("{ $text: { $search: ?0 } }")
+    Page<Review> findByTextContainingKeyword(String keyword, Pageable pageable);
+
+    // Consulta 2: Buscar con múltiples palabras clave ordenadas por relevancia con paginación
+    @Query(value = "{ $text: { $search: ?0 } }", sort = "{ score: { $meta: 'textScore' } }")
+    Page<Review> findByTextWithKeywordsSortedByRelevance(String keywords, Pageable pageable);
 }
