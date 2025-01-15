@@ -5,6 +5,7 @@ import com.uhu.AGI.model.InvoiceDTO;
 import com.uhu.AGI.services.BusinessService;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -141,6 +142,26 @@ public class BusinessController
             modelAndView.addObject("errorMessage", "Error al buscar facturas: " + e.getMessage());
         }
 
+        return modelAndView;
+    }
+
+    @GetMapping("/topRatedBusinesses")
+    public ModelAndView getTopRatedBusinessesByCategory(@RequestParam String category)
+    {
+        ModelAndView modelAndView = new ModelAndView("business/topRatedBusinesses");
+        List<Business> businesses = businessService.getTopRatedBusinessesByCategory(category);
+        modelAndView.addObject("businesses", businesses);
+        modelAndView.addObject("category", category);
+        return modelAndView;
+    }
+
+    @GetMapping("/mostReviewedBusinesses")
+    public ModelAndView getBusinessesWithMostReviewsByCategory(@RequestParam String category)
+    {
+        ModelAndView modelAndView = new ModelAndView("business/mostReviewedBusinesses");
+        List<Business> businesses = businessService.getBusinessesWithMostReviewsByCategory(category);
+        modelAndView.addObject("businesses", businesses);
+        modelAndView.addObject("category", category);  // Para mostrar la categoría en la vista
         return modelAndView;
     }
 

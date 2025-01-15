@@ -23,7 +23,7 @@ public class UserController
 {
     @Autowired
     private UserService userService;
-    
+
     @GetMapping("/home")
     public ModelAndView userHome(@RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size)
@@ -37,7 +37,7 @@ public class UserController
         modelAndView.addObject("totalPages", userPage.getTotalPages());
         return modelAndView;
     }
-    
+
     @GetMapping("/update/{id}")
     public ModelAndView updateUser(@PathVariable String id)
     {
@@ -94,7 +94,7 @@ public class UserController
         } catch (Exception e) {
             modelAndView.addObject("errorMessage", "Error al crear el usuario: " + e.getMessage());
         }
-        modelAndView.addObject("user", user);  
+        modelAndView.addObject("user", user);
         modelAndView.addObject("title", "Crear Nuevo Usuario");
         return modelAndView;
     }
@@ -119,7 +119,7 @@ public class UserController
         modelAndView.addObject("users", userPage.getContent());
         modelAndView.addObject("currentPage", page);
         modelAndView.addObject("totalPages", userPage.getTotalPages());
-        modelAndView.addObject("searchUser", user); 
+        modelAndView.addObject("searchUser", user);
         return modelAndView;
     }
 }

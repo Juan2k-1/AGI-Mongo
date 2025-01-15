@@ -31,6 +31,7 @@ import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.springframework.data.domain.Sort;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.match;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.project;
@@ -267,6 +268,30 @@ public class BusinessService
 
             return dto;
         }).toList();
+    }
+
+    public List<Business> getTopRatedBusinessesByCategory(String category)
+    {
+        Aggregation aggregation = Aggregation.newAggregation(
+                Aggregation.match(Criteria.where("categories").is(category)), // Filtra por categoría
+                Aggregation.sort(Sort.by(Sort.Order.desc("stars"))), // Ordena por la calificación (stars)
+                Aggregation.limit(10) // Limita a los 10 primeros negocios
+        );
+
+        AggregationResults<Business> results = mongoTemplate.aggregate(aggregation, "business", Business.class);
+        return results.getMappedResults();
+    }
+
+    public List<Business> getBusinessesWithMostReviewsByCategory(String category)
+    {
+        Aggregation aggregation = Aggregation.newAggregation(
+                Aggregation.match(Criteria.where("categories").in(category)), // Filtra por la categoría
+                Aggregation.sort(Sort.by(Sort.Order.desc("review_count"))), // Ordena por el número de reseñas
+                Aggregation.limit(10) // Limita a los 10 negocios con más reseñas
+        );
+
+        AggregationResults<Business> results = mongoTemplate.aggregate(aggregation, "business", Business.class);
+        return results.getMappedResults();
     }
 
 }

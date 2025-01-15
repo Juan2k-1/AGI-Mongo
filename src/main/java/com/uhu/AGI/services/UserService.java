@@ -159,5 +159,5 @@ public class UserService
     {
         Pageable pageable = PageRequest.of(page, size);
         return userRepository.findByNameContainingIgnoreCase(name, pageable);
-    }
+    }   
 }

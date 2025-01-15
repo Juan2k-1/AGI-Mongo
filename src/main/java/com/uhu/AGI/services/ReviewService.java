@@ -1,7 +1,5 @@
 package com.uhu.AGI.services;
 
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Filters;
 import com.uhu.AGI.model.Review;
 import com.uhu.AGI.model.ReviewDTO;
 import com.uhu.AGI.repositories.ReviewRepository;
@@ -11,7 +9,6 @@ import jakarta.validation.Valid;
 import jakarta.validation.Validator;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Top Rated Businesses</title>
+        <meta charset="UTF-8">  
+    </head>
+    <body>
+        <header>
+            <h1 th:text="'Top 10 Rated Businesses in ' + ${category}">Top Rated Businesses</h1>
+        </header>
+        <main>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Business ID</th>
+                        <th>Nombre</th>
+                        <th>Dirección</th>
+                        <th>Ciudad</th>
+                        <th>Estado</th>
+                        <th>Estrellas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="business : ${businesses}">
+                        <td th:text="${business.businessId}"></td>
+                        <td th:text="${business.name}"></td>
+                        <td th:text="${business.address}"></td>
+                        <td th:text="${business.city}"></td>
+                        <td th:text="${business.state}"></td>
+                        <td th:text="${business.stars}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 AGI</p>
+        </footer>
+    </body>
+</html>
+
