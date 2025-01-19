@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.query.FluentQuery;
 
 /**
@@ -94,6 +95,7 @@ public interface TipRepository extends MongoRepository<Tip, String>
      * @param pageable Paginación y orden.
      * @return Página de tips que coinciden con la búsqueda.
      */
+    @Query("{'text' : ?0}")
     Page<Tip> findByTextContainingIgnoreCase(String text, Pageable pageable);
     
 }

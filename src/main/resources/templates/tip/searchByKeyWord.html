@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title th:text="${title}">Gestión de Tips</title>
-        <meta charset="UTF-8"/>  
-        <link rel="stylesheet" th:href="@{/css/BusinessStyles.css}"/>
-        <link rel="stylesheet" th:href="@{/css/main-styles.css}"/> 
+        <title th:text="${title}">Buscar tip por palabra clave</title>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" href="/css/searchBusinessStyles.css" th:href="@{/css/searchBusinessStyles.css}" />            
     </head>
     <body>
+
+        <script th:src="@{/js/tip-actions.js}"></script>
+
         <header>
-            <h1>Gestión de Tips</h1>
+            <h1>Buscar por palabra clave</h1>
         </header>
-
-        <script src="/js/tip-actions.js"></script>
-
+        
         <nav>
             <ul>
                 <li>
@@ -33,10 +33,15 @@
             </ul>
         </nav>
 
-        <main>
-            <p th:text="${description}">Bienvenido a la sección de gestión de tips.</p>
-            <p>Aquí podrás gestionar todos los aspectos relacionados con los tips.</p>
+        <!-- Mostrar el mensaje de éxito o error si está presente -->
+        <div th:if="${successMessage}" th:class="'message success'">
+            <p th:text="${successMessage}"></p>
+        </div>
+        <div th:if="${errorMessage}" th:class="'message error'">
+            <p th:text="${errorMessage}"></p>
+        </div>
 
+        <main>
             <table border="1">
                 <thead>
                     <tr>
@@ -68,30 +73,20 @@
             <div id="actions" style="margin-top: 20px;">
                 <button disabled id="updateButton">Modificar</button>
                 <button disabled id="deleteButton">Eliminar</button>
-                <a href="/tip/create">Crear nuevo tip</a>
             </div>
 
             <!-- Paginación -->
             <div class="pagination">
                 <span th:text="'Página ' + ${currentPage + 1} + ' de ' + ${totalPages}"></span>
-                <a th:href="@{/tip/home(size=${10}, page=${currentPage - 1})}" 
+                <a th:href="@{/tip/search(size=${10}, page=${currentPage - 1})}" 
                    th:if="${currentPage > 0}">Anterior</a>
-                <a th:href="@{/tip/home(size=${10}, page=${currentPage + 1})}" 
+                <a th:href="@{/tip/search(size=${10}, page=${currentPage + 1})}" 
                    th:if="${currentPage < totalPages - 1}">Siguiente</a>
             </div>
-
-            <section>
-                <form th:action="@{/tip/search}" method="get">
-                    <input type="text" name="text" placeholder="Buscar tip por palabra clave..." 
-                           th:value="${searchText}" />
-                    <button type="submit">Buscar</button>
-                </form>
-            </section>
         </main>
-
+        
         <footer>
             <p>&copy; 2024 AGI</p>
-        </footer>
+        </footer>       
     </body>
 </html>
-

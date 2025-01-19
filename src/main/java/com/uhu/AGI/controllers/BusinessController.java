@@ -5,7 +5,6 @@ import com.uhu.AGI.model.InvoiceDTO;
 import com.uhu.AGI.services.BusinessService;
 import java.time.LocalDateTime;
 import java.util.List;
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -68,17 +68,17 @@ public class BusinessController
     }
 
     @GetMapping("/delete/{id}")
-    public ModelAndView deleteBusiness(@PathVariable String id)
+    public String deleteBusiness(@PathVariable String id,
+            RedirectAttributes redirectAttributes)
     {
-        ModelAndView modelAndView = new ModelAndView("redirect:/business/home");
         try {
             Business business = businessService.getBusinessById(id);
             businessService.deleteBusiness(business);
-            modelAndView.addObject("successMessage", "Negocio eliminado correctamente.");
+            redirectAttributes.addFlashAttribute("successMessage", "Negocio eliminado correctamente.");
         } catch (Exception e) {
-            modelAndView.addObject("errorMessage", "Error al eliminar el negocio: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "Error al eliminar el negocio: " + e.getMessage());
         }
-        return modelAndView;
+        return "redirect:/business/search";
     }
 
     @GetMapping("/create")
@@ -111,16 +111,12 @@ public class BusinessController
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size)
     {
-        ModelAndView modelAndView = new ModelAndView("business/home");
+        ModelAndView modelAndView = new ModelAndView("business/searchBusinessesByName");
         Page<Business> businessPage;
 
-        if (name != null && !name.isEmpty()) {
-            businessPage = businessService.searchBusinessesByName(name, page, size);
-        } else {
-            businessPage = businessService.getBusinesses(page, size);
-        }
+        businessPage = businessService.searchBusinessesByName(name, page, size);      
 
-        modelAndView.addObject("title", "Gestión de Negocios");
+        modelAndView.addObject("title", "Buscar negocio por nombre");
         modelAndView.addObject("description", "Resultados de la búsqueda de negocios.");
         modelAndView.addObject("businesses", businessPage.getContent());
         modelAndView.addObject("currentPage", page);

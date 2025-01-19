@@ -1,21 +1,42 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <meta charset="UTF-8">
         <title>Crear Nueva Reseña</title>
+        <meta charset="UTF-8"/> 
+        <link rel="stylesheet" href="/css/createBusinessStyles.css" th:href="@{/css/createBusinessStyles.css}"/>
     </head>
     <body>
         <header>
             <h1>Crear Nueva Reseña</h1>
         </header>
+        
+        <nav>
+            <ul>
+                <li>
+                    <a th:href="@{/business/home}">Gestión de negocios</a>
+                </li>
+                <li>
+                    <a th:href="@{/checkin/home}">Gestión de facturas</a>
+                </li>
+                <li>
+                    <a th:href="@{/review/home}">Gestión de reseñas</a>
+                </li>
+                <li>
+                    <a th:href="@{/user/home}">Gestión de usuarios</a>
+                </li>
+                <li>
+                    <a th:href="@{/tip/home}">Gestión de propinas</a>
+                </li>
+            </ul>
+        </nav>
 
         <main>
             
             <!-- Mostrar el mensaje de éxito o error si está presente -->
-            <div th:if="${successMessage}" class="alert alert-success">
+            <div th:if="${successMessage}" th:class="'message success'">
                 <p th:text="${successMessage}"></p>
             </div>
-            <div th:if="${errorMessage}" class="alert alert-danger">
+            <div th:if="${errorMessage}" th:class="'message error'">
                 <p th:text="${errorMessage}"></p>
             </div>
             

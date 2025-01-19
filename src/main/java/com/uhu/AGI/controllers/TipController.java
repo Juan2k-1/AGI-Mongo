@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -63,17 +64,16 @@ public class TipController
     }
 
     @GetMapping("/delete/{id}")
-    public ModelAndView deleteTip(@PathVariable String id)
-    {
-        ModelAndView modelAndView = new ModelAndView("redirect:/tip/home");
+    public String deleteTip(@PathVariable String id, RedirectAttributes redirectAttributes)
+    {   
         try {
             Tip tip = tipService.getTipById(id);
             tipService.deleteTip(tip);
-            modelAndView.addObject("successMessage", "Tip eliminado correctamente.");
+            redirectAttributes.addFlashAttribute("successMessage", "Tip eliminado correctamente.");
         } catch (Exception e) {
-            modelAndView.addObject("errorMessage", "Error al eliminar el tip: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "Error al eliminar el tip: " + e.getMessage());
         }
-        return modelAndView;
+        return "redirect:/tip/search";
     }
 
     @GetMapping("/create")
@@ -106,15 +106,11 @@ public class TipController
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size)
     {
-        ModelAndView modelAndView = new ModelAndView("tip/home");
+        ModelAndView modelAndView = new ModelAndView("tip/searchByKeyWord");
         Page<Tip> tipPage;
 
-        if (text != null && !text.isEmpty()) {
-            tipPage = tipService.searchByText(text, page, size);
-        } else {
-            tipPage = tipService.getTips(page, size);
-        }
-
+        tipPage = tipService.searchByText(text, page, size);
+        
         modelAndView.addObject("title", "Gestión de Tips");
         modelAndView.addObject("description", "Resultados de la búsqueda de tips.");
         modelAndView.addObject("tips", tipPage.getContent());

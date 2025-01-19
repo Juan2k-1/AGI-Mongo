@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Crear Nueva Factura</title>
-        <meta charset="UTF-8">        
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" href="/css/createBusinessStyles.css" th:href="@{/css/createBusinessStyles.css}"/>        
     </head>
     <body>
         <header>
@@ -12,10 +13,10 @@
         <main>
             
             <!-- Mostrar el mensaje de éxito o error si está presente -->
-            <div th:if="${successMessage}" class="alert alert-success">
+            <div th:if="${successMessage}" th:class="'message success'">
                 <p th:text="${successMessage}"></p>
             </div>
-            <div th:if="${errorMessage}" class="alert alert-danger">
+            <div th:if="${errorMessage}" th:class="'message error'">
                 <p th:text="${errorMessage}"></p>
             </div>
             
@@ -26,7 +27,7 @@
                 </div>
                 <div>
                     <label for="date">Fecha de la factura</label>
-                    <input type="date" id="date" th:field="*{date}" required />
+                    <input type="datetime-local" id="date" th:field="*{date}" required />
                 </div>                
 
                 <div>

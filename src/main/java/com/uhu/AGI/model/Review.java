@@ -34,7 +34,7 @@ public class Review
     @NotBlank(message = "El business_id es obligatorio.")
     private String businessId;
 
-    @Min(value = 1, message = "Las estrellas deben ser al menos 1.")
+    @Min(value = 0, message = "Las estrellas deben ser al menos 1.")
     @Max(value = 5, message = "Las estrellas no pueden ser mayores a 5.")
     private float stars;
 

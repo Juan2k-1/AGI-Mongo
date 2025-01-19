@@ -2,31 +2,41 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title th:text="${title}">Gestión de Negocios</title>
-        <meta charset="UTF-8">       
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" th:href="@{/css/BusinessStyles.css}"/>
+        <link rel="stylesheet" th:href="@{/css/main-styles.css}"/> 
     </head>
     <body>
         <header>
             <h1 th:text="${title}">Gestión de Negocios</h1>
         </header>
 
-        <script src="/js/business-actions.js"></script>
+        <script th:src="@{/js/business-actions.js}"></script>
+        
+        <nav>
+            <ul>
+                <li>
+                    <a th:href="@{/business/home}">Gestión de negocios</a>
+                </li>
+                <li>
+                    <a th:href="@{/checkin/home}">Gestión de facturas</a>
+                </li>
+                <li>
+                    <a th:href="@{/review/home}">Gestión de reseñas</a>
+                </li>
+                <li>
+                    <a th:href="@{/user/home}">Gestión de usuarios</a>
+                </li>
+                <li>
+                    <a th:href="@{/tip/home}">Gestión de propinas</a>
+                </li>
+            </ul>
+        </nav>
 
-        <form th:action="@{/business/search}" method="get" class="search-form">
-            <input type="text" name="name" placeholder="Buscar negocio..." 
-                   th:value="${searchName}" />
-            <button type="submit">Buscar</button>
-        </form>
+        <p class="description-text" th:text="${description}">Bienvenido a la sección de gestión de negocios.</p>
+        <p class="description-text">Aquí podrás gestionar todos los aspectos relacionados con tus negocios.</p>
 
-        <form th:action="@{/business/invoices}" method="get" class="search-form">
-            <input type="text" name="businessId" placeholder="Business ID" required />
-            <input type="text" name="date" required />
-            <button type="submit">Buscar Facturas</button>
-        </form>
-
-        <main>
-            <p th:text="${description}">Bienvenido a la sección de gestión de negocios.</p>
-            <p>Aquí podrás gestionar todos los aspectos relacionados con tus negocios.</p>
-
+        <main>            
             <table border="1">
                 <thead>
                     <tr>
@@ -36,6 +46,7 @@
                         <th>Ciudad</th>
                         <th>Estado</th>
                         <th>Estrellas</th>
+                        <th>Select</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,7 +72,7 @@
             </div>
 
             <!-- Paginación -->
-            <div>
+            <div class="pagination">
                 <span th:text="'Página ' + ${currentPage + 1} + ' de ' + ${totalPages}"></span>
                 <a th:href="@{/business/home(size=${10}, page=${currentPage - 1})}" 
                    th:if="${currentPage > 0}">Anterior</a>
@@ -69,23 +80,36 @@
                    th:if="${currentPage < totalPages - 1}">Siguiente</a>
             </div>
 
-            <section>
-                <!-- Formulario para buscar negocios mejor calificados por categoría -->
+            <h2 class="description-text">Sección de Búsquedas de Negocios</h2>
+            <section class="form-container">
+                              
                 <form th:action="@{/business/topRatedBusinesses}" method="get">
                     <label for="category">Selecciona una categoría:</label>
                     <input type="text" id="category" name="category" placeholder="Ej. Doctors" required />
                     <button type="submit">Ver Negocios Mejor Calificados</button>
                 </form>
-            </section>
 
-            <section>
                 <form th:action="@{/business/mostReviewedBusinesses}" method="get">
                     <label for="category">Selecciona una categoría:</label>
-                    <input type="text" id="category" name="category" placeholder="Ej. Restaurantes" required />
+                    <input type="text" id="category" name="category" placeholder="Ej. Doctors" required />
                     <button type="submit">Ver Negocios con Más Reseñas</button>
                 </form>
-            </section>
 
+                <form th:action="@{/business/search}" method="get">
+                    <label for="name">Indique el nombre del negocio:</label>
+                    <input type="text" name="name" placeholder="Buscar negocio por nombre..." 
+                           th:value="${searchName}" />
+                    <button type="submit">Buscar</button>
+                </form>
+
+                <form th:action="@{/business/invoices}" method="get">
+                    <label for="businessId">Indique el id del negocio:</label>
+                    <input type="text" name="businessId" placeholder="Business ID" required />
+                    <label for="date">Indique la fecha:</label>
+                    <input type="text" name="date" placeholder="Fecha: (yyyy-MM-dd HH:mm:ss)" required />
+                    <button type="submit">Buscar Facturas</button>
+                </form>
+            </section>
         </main>
 
         <footer>

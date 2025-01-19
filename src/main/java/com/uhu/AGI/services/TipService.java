@@ -130,6 +130,7 @@ public class TipService
      * @param size Tamaño de la página.
      * @return Página de tips que contienen el texto buscado.
      */
+    @Transactional
     public Page<Tip> searchByText(String text, int page, int size)
     {
         Pageable pageable = PageRequest.of(page, size);

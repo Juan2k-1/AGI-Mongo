@@ -1,13 +1,34 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <meta charset="UTF-8">
         <title th:text="${title}">Modificar Reseña</title>
+        <meta charset="UTF-8"/> 
+        <link rel="stylesheet" th:href="@{/css/updateBusinessStyles.css}" />
     </head>
     <body>
         <header>
             <h1 th:text="${title}">Modificar Reseña</h1>
         </header>
+        
+        <nav>
+            <ul>
+                <li>
+                    <a th:href="@{/business/home}">Gestión de negocios</a>
+                </li>
+                <li>
+                    <a th:href="@{/checkin/home}">Gestión de facturas</a>
+                </li>
+                <li>
+                    <a th:href="@{/review/home}">Gestión de reseñas</a>
+                </li>
+                <li>
+                    <a th:href="@{/user/home}">Gestión de usuarios</a>
+                </li>
+                <li>
+                    <a th:href="@{/tip/home}">Gestión de propinas</a>
+                </li>
+            </ul>
+        </nav>
 
         <main>
             <form th:action="@{/review/update}" th:object="${review}" method="post">
@@ -53,8 +74,13 @@
                 <button type="submit">Modificar</button>
             </form>
 
-            <p th:if="${successMessage}" th:text="${successMessage}" style="color: green;"></p>
-            <p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></p>
+            <!-- Mostrar el mensaje de éxito o error si está presente -->
+            <div th:if="${successMessage}" th:class="'message success'">
+                <p th:text="${successMessage}"></p>
+            </div>
+            <div th:if="${errorMessage}" th:class="'message error'">
+                <p th:text="${errorMessage}"></p>
+            </div>
         </main>
 
         <footer>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -62,9 +63,9 @@ public class UserController
     }
 
     @GetMapping("/delete/{id}")
-    public ModelAndView deleteUser(@PathVariable String id)
+    public String deleteUser(@PathVariable String id, RedirectAttributes redirectAttributes)
     {
-        ModelAndView modelAndView = new ModelAndView("redirect:/user/home");
+        /*ModelAndView modelAndView = new ModelAndView("redirect:/user/home");
         try {
             User user = userService.getUserById(id);
             userService.deleteUser(user);
@@ -72,7 +73,15 @@ public class UserController
         } catch (Exception e) {
             modelAndView.addObject("errorMessage", "Error al eliminar el usuario: " + e.getMessage());
         }
-        return modelAndView;
+        return modelAndView;*/
+        try {
+            User user = userService.getUserById(id);
+            userService.deleteUser(user);
+            redirectAttributes.addFlashAttribute("successMessage", "Usuario eliminado correctamente.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Error al eliminar el usuario: " + e.getMessage());
+        }
+        return "redirect:/user/search";
     }
 
     @GetMapping("/create")
@@ -108,11 +117,7 @@ public class UserController
         ModelAndView modelAndView = new ModelAndView("user/home");
         Page<User> userPage;
 
-        if (user != null && !user.isEmpty()) {
-            userPage = userService.searchUserByName(user, page, size);
-        } else {
-            userPage = userService.getUsers(page, size);
-        }
+        userPage = userService.searchUserByName(user, page, size);
 
         modelAndView.addObject("title", "Gestión de Usuarios");
         modelAndView.addObject("description", "Resultados de la búsqueda de usuarios.");

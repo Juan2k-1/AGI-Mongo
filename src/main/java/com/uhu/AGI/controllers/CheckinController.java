@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -63,17 +64,16 @@ public class CheckinController
     }
 
     @GetMapping("/delete/{id}")
-    public ModelAndView deleteCheckin(@PathVariable String id)
-    {
-        ModelAndView modelAndView = new ModelAndView("redirect:/checkin/home");
+    public String deleteCheckin(@PathVariable String id, RedirectAttributes redirectAttributes)
+    {   
         try {
             Checkin checkin = checkinService.getCheckinById(id);
             checkinService.deleteCheckin(checkin);
-            modelAndView.addObject("successMessage", "Factura eliminada correctamente.");
+            redirectAttributes.addFlashAttribute("successMessage", "Factura eliminada correctamente.");
         } catch (Exception e) {
-            modelAndView.addObject("errorMessage", "Error al eliminar la factura: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "Error al eliminar la factura: " + e.getMessage());
         }
-        return modelAndView;
+        return "redirect:/checkin/search";
     }
 
     @GetMapping("/create")
@@ -102,25 +102,21 @@ public class CheckinController
 
     @GetMapping("/search")
     public ModelAndView searchCheckins(
-            @RequestParam(required = false) String business,
+            @RequestParam(required = false) String checkin,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size)
     {
         ModelAndView modelAndView = new ModelAndView("checkin/home");
         Page<Checkin> checkinPage;
-
-        if (business != null && !business.isEmpty()) {
-            checkinPage = checkinService.searchCheckinByName(business, page, size);
-        } else {
-            checkinPage = checkinService.getCheckins(page, size);
-        }
-
+      
+        checkinPage = checkinService.searchCheckinByName(checkin, page, size);
+        
         modelAndView.addObject("title", "Gestión de Facturas");
         modelAndView.addObject("description", "Resultados de la búsqueda de facturas.");
         modelAndView.addObject("checkins", checkinPage.getContent());
         modelAndView.addObject("currentPage", page);
         modelAndView.addObject("totalPages", checkinPage.getTotalPages());
-        modelAndView.addObject("searchBusiness", business); 
+        modelAndView.addObject("searchCheckin", checkin); 
         return modelAndView;
     }
 }

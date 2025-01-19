@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title th:text="${title}">Crear Tip</title>
-        <meta charset="UTF-8">
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" href="/css/createBusinessStyles.css" th:href="@{/css/createBusinessStyles.css}"/>
     </head>
     <body>
 
@@ -10,40 +11,61 @@
             <h1>Crear Nuevo Tip</h1>
         </header>
 
-        <!-- Mostrar el mensaje de éxito o error si está presente -->
-        <div th:if="${successMessage}">
-            <p th:text="${successMessage}"></p>
-        </div>
-        <div th:if="${errorMessage}">
-            <p th:text="${errorMessage}"></p>
-        </div>
+        <nav>
+            <ul>
+                <li>
+                    <a th:href="@{/business/home}">Gestión de negocios</a>
+                </li>
+                <li>
+                    <a th:href="@{/checkin/home}">Gestión de facturas</a>
+                </li>
+                <li>
+                    <a th:href="@{/review/home}">Gestión de reseñas</a>
+                </li>
+                <li>
+                    <a th:href="@{/user/home}">Gestión de usuarios</a>
+                </li>
+                <li>
+                    <a th:href="@{/tip/home}">Gestión de propinas</a>
+                </li>
+            </ul>
+        </nav>
 
-        <form action="/tip/create" method="post" th:object="${tip}">
-
-            <div>
-                <label for="userId">ID del usuario:</label>
-                <input type="text" id="userId" th:field="*{userId}" required/>
+        <main>
+            <div th:if="${successMessage}" th:class="'message success'">
+                <p th:text="${successMessage}"></p>
             </div>
-            <div>
-                <label for="businessId">ID del negocio:</label>
-                <input type="text" id="businessId" th:field="*{businessId}" required/>
-            </div>
-            <div>
-                <label for="text">Texto del Tip:</label>
-                <textarea id="text" th:field="*{text}" rows="4" required></textarea>
-            </div>
-            <div>
-                <label for="date">Fecha:</label>
-                <input type="datetime-local" id="date" th:field="*{date}" required/>
-            </div>
-            <div>
-                <label for="complimentCount">Cantidad de Halagos:</label>
-                <input type="number" min="0" id="complimentCount" th:field="*{complimentCount}"/>
+            <div th:if="${errorMessage}" th:class="'message error'">
+                <p th:text="${errorMessage}"></p>
             </div>
 
-            <div>
-                <button type="submit">Crear Tip</button>
-            </div>
-        </form>
+            <form action="/tip/create" method="post" th:object="${tip}">
+
+                <div>
+                    <label for="userId">ID del usuario:</label>
+                    <input type="text" id="userId" th:field="*{userId}" required/>
+                </div>
+                <div>
+                    <label for="businessId">ID del negocio:</label>
+                    <input type="text" id="businessId" th:field="*{businessId}" required/>
+                </div>
+                <div>
+                    <label for="text">Texto del Tip:</label>
+                    <textarea id="text" th:field="*{text}" rows="4" required></textarea>
+                </div>
+                <div>
+                    <label for="date">Fecha:</label>
+                    <input type="datetime-local" id="date" th:field="*{date}" required/>
+                </div>
+                <div>
+                    <label for="complimentCount">Cantidad de Halagos:</label>
+                    <input type="number" min="0" id="complimentCount" th:field="*{complimentCount}"/>
+                </div>
+
+                <div>
+                    <button type="submit">Crear Tip</button>
+                </div>
+            </form>
+        </main>
     </body>
 </html>

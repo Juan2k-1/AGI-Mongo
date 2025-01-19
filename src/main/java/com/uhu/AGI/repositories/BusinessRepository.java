@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Repository;
 
@@ -89,6 +90,7 @@ public interface BusinessRepository extends MongoRepository<Business, String>
     @Override
     public <S extends Business> Optional<S> findOne(Example<S> example);
     
+    @Query("{'name' : ?0}")
     Page<Business> findByNameContainingIgnoreCase(String name, Pageable pageable);
     
 }

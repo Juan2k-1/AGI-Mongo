@@ -2,7 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title th:text="${title}">Gestión de Usuarios</title>
-        <meta charset="UTF-8">       
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" th:href="@{/css/BusinessStyles.css}"/>
+        <link rel="stylesheet" th:href="@{/css/main-styles.css}"/> 
     </head>
     <body>
         <header>
@@ -11,14 +13,36 @@
 
         <script src="/js/user-actions.js"></script>
 
-        <!-- Formulario de búsqueda -->
-        <form th:action="@{/user/search}" method="get" class="search-form">
-            <input type="text" name="user" placeholder="Buscar usuario por nombre..." 
-                   th:value="${searchUser}" />
-            <button type="submit">Buscar</button>
-        </form>
+        <nav>
+            <ul>
+                <li>
+                    <a th:href="@{/business/home}">Gestión de negocios</a>
+                </li>
+                <li>
+                    <a th:href="@{/checkin/home}">Gestión de facturas</a>
+                </li>
+                <li>
+                    <a th:href="@{/review/home}">Gestión de reseñas</a>
+                </li>
+                <li>
+                    <a th:href="@{/user/home}">Gestión de usuarios</a>
+                </li>
+                <li>
+                    <a th:href="@{/tip/home}">Gestión de propinas</a>
+                </li>
+            </ul>
+        </nav>
 
         <main>
+
+            <!-- Mostrar el mensaje de éxito o error si está presente -->
+            <div th:if="${successMessage}" th:class="'message success'">
+                <p th:text="${successMessage}"></p>
+            </div>
+            <div th:if="${errorMessage}" th:class="'message error'">
+                <p th:text="${errorMessage}"></p>
+            </div>
+
             <p th:text="${description}">Bienvenido a la sección de gestión de usuarios.</p>
             <p>Aquí podrás gestionar todos los aspectos relacionados con los usuarios.</p>
 
@@ -34,6 +58,7 @@
                         <th>Divertido</th>
                         <th>Genial</th>
                         <th>Estrellas Promedio</th>
+                        <th>Select</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -62,13 +87,22 @@
             </div>
 
             <!-- Paginación -->
-            <div>
+            <div class="pagination">
                 <span th:text="'Página ' + (${currentPage + 1}) + ' de ' + ${totalPages}"></span>
                 <a th:href="@{/user/home(size=${10}, page=${currentPage - 1})}" 
                    th:if="${currentPage > 0}">Anterior</a>
                 <a th:href="@{/user/home(size=${10}, page=${currentPage + 1})}" 
                    th:if="${currentPage < totalPages - 1}">Siguiente</a>
             </div>
+
+            <section>
+                <!-- Formulario de búsqueda -->
+                <form th:action="@{/user/search}" method="get">
+                    <input type="text" name="user" placeholder="Buscar usuario por nombre..." 
+                           th:value="${searchUser}" />
+                    <button type="submit">Buscar</button>
+                </form>
+            </section>
         </main>
 
         <footer>

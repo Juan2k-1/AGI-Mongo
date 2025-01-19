@@ -2,12 +2,33 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Facturas de Negocio</title>
-        <meta charset="UTF-8">       
+        <meta charset="UTF-8"/>   
+        <link rel="stylesheet" th:href="@{/css/searchBusinessStyles.css}" />
     </head>
     <body>
         <header>
             <h1>Facturas de Negocio</h1>
         </header>
+        
+        <nav>
+            <ul>
+                <li>
+                    <a th:href="@{/business/home}">Gestión de negocios</a>
+                </li>
+                <li>
+                    <a th:href="@{/checkin/home}">Gestión de facturas</a>
+                </li>
+                <li>
+                    <a th:href="@{/review/home}">Gestión de reseñas</a>
+                </li>
+                <li>
+                    <a th:href="@{/user/home}">Gestión de usuarios</a>
+                </li>
+                <li>
+                    <a th:href="@{/tip/home}">Gestión de propinas</a>
+                </li>
+            </ul>
+        </nav>
 
         <div th:if="${successMessage}" style="color: green;">
             <p th:text="${successMessage}"></p>

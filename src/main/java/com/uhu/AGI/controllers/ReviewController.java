@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -67,17 +68,16 @@ public class ReviewController
     }
 
     @GetMapping("/delete/{id}")
-    public ModelAndView deleteReview(@PathVariable String id)
-    {
-        ModelAndView modelAndView = new ModelAndView("redirect:/review/home");
+    public String deleteReview(@PathVariable String id, RedirectAttributes redirectAttributes)
+    {       
         try {
             Review review = reviewService.getReviewById(id);
             reviewService.deleteReview(review);
-            modelAndView.addObject("successMessage", "Reseña eliminada correctamente.");
+            redirectAttributes.addFlashAttribute("successMessage", "Reseña eliminada correctamente.");
         } catch (Exception e) {
-            modelAndView.addObject("errorMessage", "Error al eliminar la reseña: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "Error al eliminar la reseña: " + e.getMessage());
         }
-        return modelAndView;
+        return "redirect:/review/search";
     }
 
     @GetMapping("/create")
@@ -113,11 +113,7 @@ public class ReviewController
         ModelAndView modelAndView = new ModelAndView("review/home");
         Page<Review> reviewPage;
 
-        if (user != null && !user.isEmpty()) {
-            reviewPage = reviewService.searchReviewByUser(user, page, size);
-        } else {
-            reviewPage = reviewService.getReviews(page, size);
-        }
+        reviewPage = reviewService.searchReviewByUser(user, page, size);
 
         modelAndView.addObject("title", "Gestión de Reseñas");
         modelAndView.addObject("description", "Resultados de la búsqueda de reseñas.");

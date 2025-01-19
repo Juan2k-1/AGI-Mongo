@@ -2,18 +2,39 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title th:text="${title}">Modificar Tip</title>
-        <meta charset="UTF-8">       
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" th:href="@{/css/updateBusinessStyles.css}" />
     </head>
     <body>
         <header>
-            <h1 th:text="${title}">Modificar Tip</h1>
+            <h1>Modificar Tip</h1>
         </header>
+
+        <nav>
+            <ul>
+                <li>
+                    <a th:href="@{/business/home}">Gestión de negocios</a>
+                </li>
+                <li>
+                    <a th:href="@{/checkin/home}">Gestión de facturas</a>
+                </li>
+                <li>
+                    <a th:href="@{/review/home}">Gestión de reseñas</a>
+                </li>
+                <li>
+                    <a th:href="@{/user/home}">Gestión de usuarios</a>
+                </li>
+                <li>
+                    <a th:href="@{/tip/home}">Gestión de propinas</a>
+                </li>
+            </ul>
+        </nav>
 
         <main>
             <form th:action="@{/tip/update}" th:object="${tip}" method="post">
                 <!-- Campo oculto para el ID del Tip -->
                 <input type="hidden" th:field="*{id}" />
-                
+
                 <div>
                     <label for="userId">ID del usuario:</label>
                     <input type="text" id="userId" th:field="*{userId}" readonly />
@@ -38,9 +59,13 @@
                 <button type="submit">Modificar</button>
             </form>
 
-            <!-- Mostrar mensajes de éxito o error -->
-            <p th:if="${successMessage}" th:text="${successMessage}" style="color: green;"></p>
-            <p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></p>
+            <!-- Mostrar el mensaje de éxito o error si está presente -->
+            <div th:if="${successMessage}" th:class="'message success'">
+                <p th:text="${successMessage}"></p>
+            </div>
+            <div th:if="${errorMessage}" th:class="'message error'">
+                <p th:text="${errorMessage}"></p>
+            </div>
         </main>
 
         <footer>

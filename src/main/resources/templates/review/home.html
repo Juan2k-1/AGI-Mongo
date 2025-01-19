@@ -2,31 +2,44 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title th:text="${title}">Gestión de Reseñas</title>
-        <meta charset="UTF-8">      
+        <meta charset="UTF-8"/> 
+        <link rel="stylesheet" th:href="@{/css/BusinessStyles.css}"/>
+        <link rel="stylesheet" th:href="@{/css/main-styles.css}"/> 
     </head>
     <body>
         <header>
-            <h1 th:text="${title}">Gestión de Reseñas</h1>
+            <h1>Gestión de Reseñas</h1>
         </header>
 
         <script src="/js/review-actions.js"></script>
 
-        <!-- Formulario para buscar reseñas por usuario y fecha -->
-        <form th:action="@{/review/searchByUserAndDate}" method="get">
-            <label for="userId">ID Usuario:</label>
-            <input type="text" name="userId" id="userId" placeholder="Introduce el ID de usuario" required />
+        <nav>
+            <ul>
+                <li>
+                    <a th:href="@{/business/home}">Gestión de negocios</a>
+                </li>
+                <li>
+                    <a th:href="@{/checkin/home}">Gestión de facturas</a>
+                </li>
+                <li>
+                    <a th:href="@{/review/home}">Gestión de reseñas</a>
+                </li>
+                <li>
+                    <a th:href="@{/user/home}">Gestión de usuarios</a>
+                </li>
+                <li>
+                    <a th:href="@{/tip/home}">Gestión de propinas</a>
+                </li>
+            </ul>
+        </nav>
 
-            <label for="date">Fecha:</label>
-            <input type="text" name="date" id="date" required />
-
-            <button type="submit">Buscar por Usuario y Fecha</button>
-        </form>
-
-        <form th:action="@{/review/search}" method="get">
-            <input type="text" name="user" placeholder="Buscar reseña..." 
-                   th:value="${searchUser}" />
-            <button type="submit">Buscar</button>
-        </form>
+        <!-- Mostrar el mensaje de éxito o error si está presente -->
+        <div th:if="${successMessage}" th:class="'message success'">
+            <p th:text="${successMessage}"></p>
+        </div>
+        <div th:if="${errorMessage}" th:class="'message error'">
+            <p th:text="${errorMessage}"></p>
+        </div>
 
         <main>
             <p th:text="${description}">Bienvenido a la sección de gestión de reseñas.</p>
@@ -38,12 +51,13 @@
                         <th>ID Review</th>
                         <th>ID Usuario</th>
                         <th>ID Negocio</th>
-                        <th>Stars</th>
-                        <th>Useful</th>
-                        <th>Funny</th>
-                        <th>Cool</th>
-                        <th>Text</th>
-                        <th>Date</th>
+                        <th>Estrellas</th>
+                        <th>Utilidad</th>
+                        <th>Gracioso</th>
+                        <th>Divertido</th>
+                        <th>Texto</th>
+                        <th>Fecha</th>
+                        <th>Seleccionar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -72,7 +86,7 @@
             </div>
 
             <!-- Paginación -->
-            <div>
+            <div class="pagination">
                 <span th:text="'Página ' + ${currentPage + 1} + ' de ' + ${totalPages}"></span>
                 <a th:href="@{/review/home(size=${10}, page=${currentPage - 1})}" 
                    th:if="${currentPage > 0}">Anterior</a>
@@ -86,6 +100,26 @@
                     <button type="submit" style="padding: 10px 20px; font-size: 16px;">Buscar por Palabra Clave</button>
                 </form>
             </div>
+
+            <section class="form-container">
+                <!-- Formulario para buscar reseñas por usuario y fecha -->
+                <form th:action="@{/review/searchByUserAndDate}" method="get">
+                    <label for="userId">ID Usuario:</label>
+                    <input type="text" name="userId" id="userId" placeholder="Introduce el ID de usuario" required />
+
+                    <label for="date">Fecha:</label>
+                    <input type="text" name="date" id="date" placeholder="Introduce la fecha" required />
+
+                    <button type="submit">Buscar por Usuario y Fecha</button>
+                </form>
+
+                <form th:action="@{/review/search}" method="get">
+                    <label for="userId">ID Usuario:</label>
+                    <input type="text" name="user" placeholder="Introduce el ID de usuario..." 
+                           th:value="${searchUser}" />
+                    <button type="submit">Buscar</button>
+                </form>
+            </section>
         </main>
 
         <footer>

@@ -2,7 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title th:text="${title}">Gestión de Facturas</title>
-        <meta charset="UTF-8">       
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" th:href="@{/css/BusinessStyles.css}"/>
+        <link rel="stylesheet" th:href="@{/css/main-styles.css}"/> 
     </head>
     <body>
         <header>
@@ -10,12 +12,6 @@
         </header>
 
         <script src="/js/checkin-actions.js"></script>
-        
-        <form th:action="@{/checkin/search}" method="get" class="search-form">
-            <input type="text" name="business" placeholder="Buscar factura..." 
-                   th:value="${searchBusiness}" />
-            <button type="submit">Buscar</button>
-        </form>
 
         <main>
             <p th:text="${description}">Bienvenido a la sección de gestión de facturas.</p>
@@ -25,7 +21,8 @@
                 <thead>
                     <tr>
                         <th>Business ID</th>
-                        <th>Date</th>
+                        <th>Fecha</th>
+                        <th>Seleccionar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,7 +44,7 @@
             </div>
 
             <!-- Paginación -->
-            <div>
+            <div class="pagination">
                 <span th:text="'Página ' + ${currentPage + 1} + ' de ' + ${totalPages}"></span>
                 <a th:href="@{/checkin/home(size=${10}, page=${currentPage - 1})}" 
                    th:if="${currentPage > 0}">Anterior</a>
@@ -55,6 +52,20 @@
                    th:if="${currentPage < totalPages - 1}">Siguiente</a>
             </div>
 
+            <form th:action="@{/checkin/search}" method="get">
+                <label for="businessId">Indique el id de la factura:</label>
+                <input type="text" name="checkin" placeholder="Buscar factura por ID..." 
+                       th:value="${searchCheckin}" />
+                <button type="submit">Buscar</button>
+            </form>
+
+            <!-- Mostrar el mensaje de éxito o error si está presente -->
+            <div th:if="${successMessage}" th:class="'message success'">
+                <p th:text="${successMessage}"></p>
+            </div>
+            <div th:if="${errorMessage}" th:class="'message error'">
+                <p th:text="${errorMessage}"></p>
+            </div>
         </main>
 
         <footer>

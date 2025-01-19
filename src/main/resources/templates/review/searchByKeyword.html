@@ -1,58 +1,84 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
+    <head>    
         <title>Buscar Reseñas</title>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" th:href="@{/css/BusinessStyles.css}"/>
+        <link rel="stylesheet" th:href="@{/css/main-styles.css}"/> 
     </head>
     <body>
         <header>
             <h1>Buscar Reseñas</h1>
         </header>
 
-        <form th:action="@{/review/searchByKeyword}" method="get">
-            <label for="keyword">Buscar una palabra clave:</label>
-            <input type="text" id="keyword" name="keyword" placeholder="Ej. excelente" />
-            <button type="submit">Buscar</button>
-        </form>
+        <nav>
+            <ul>
+                <li>
+                    <a th:href="@{/business/home}">Gestión de negocios</a>
+                </li>
+                <li>
+                    <a th:href="@{/checkin/home}">Gestión de facturas</a>
+                </li>
+                <li>
+                    <a th:href="@{/review/home}">Gestión de reseñas</a>
+                </li>
+                <li>
+                    <a th:href="@{/user/home}">Gestión de usuarios</a>
+                </li>
+                <li>
+                    <a th:href="@{/tip/home}">Gestión de propinas</a>
+                </li>
+            </ul>
+        </nav>
 
-        <form th:action="@{/review/searchByKeyword}" method="get">
-            <label for="keywords">Buscar palabras clave:</label>
-            <input type="text" id="keywords" name="keywords" placeholder="Ej. servicio rápido, calidad" />
-            <button type="submit">Buscar</button>
-        </form>
+        <main>
+            <section>
+                <form th:action="@{/review/searchByKeyword}" method="get">
+                    <label for="keyword">Buscar una palabra clave:</label>
+                    <input type="text" id="keyword" name="keyword" placeholder="Ex. excelent" />
+                    <button type="submit">Buscar</button>
+                </form>
 
-        <h2>Resultados</h2>
-        <table border="1" th:if="${reviewsPage.content.size() > 0}">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Texto</th>
-                    <th>Usuario</th>
-                    <th>Negocio</th>
-                    <th>Estrellas</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="review : ${reviewsPage.content}">
-                    <td th:text="${review.id}"></td>
-                    <td th:text="${review.text}"></td>
-                    <td th:text="${review.userId}"></td>
-                    <td th:text="${review.businessId}"></td>
-                    <td th:text="${review.stars}"></td>
-                </tr>
-            </tbody>
-        </table>
+                <form th:action="@{/review/searchByKeyword}" method="get">
+                    <label for="keywords">Buscar palabras clave:</label>
+                    <input type="text" id="keywords" name="keywords" placeholder="Ex. fast, quality" />
+                    <button type="submit">Buscar</button>
+                </form>
+            </section>
 
-        <div th:if="${reviewsPage.totalPages > 1}">
-            <span th:text="'Página ' + (${currentPage} + 1) + ' de ' + ${totalPages}"></span>
-            <div>
-                <a th:if="${currentPage > 0}" th:href="@{/reviews/search(keyword=${keyword}, keywords=${keywords}, page=${currentPage - 1}, size=${reviewsPage.size})}">Anterior</a>
-                <a th:if="${currentPage < (totalPages - 1)}" th:href="@{/reviews/search(keyword=${keyword}, keywords=${keywords}, page=${currentPage + 1}, size=${reviewsPage.size})}">Siguiente</a>
+            <h2>Resultados</h2>
+            <table border="1" th:if="${reviewsPage.content.size() > 0}">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Texto</th>
+                        <th>Usuario</th>
+                        <th>Negocio</th>
+                        <th>Estrellas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="review : ${reviewsPage.content}">
+                        <td th:text="${review.id}"></td>
+                        <td th:text="${review.text}"></td>
+                        <td th:text="${review.userId}"></td>
+                        <td th:text="${review.businessId}"></td>
+                        <td th:text="${review.stars}"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div th:if="${reviewsPage.totalPages > 1}">
+                <span th:text="'Página ' + (${currentPage} + 1) + ' de ' + ${totalPages}"></span>
+                <div>
+                    <a th:if="${currentPage > 0}" th:href="@{/reviews/search(keyword=${keyword}, keywords=${keywords}, page=${currentPage - 1}, size=${reviewsPage.size})}">Anterior</a>
+                    <a th:if="${currentPage < (totalPages - 1)}" th:href="@{/reviews/search(keyword=${keyword}, keywords=${keywords}, page=${currentPage + 1}, size=${reviewsPage.size})}">Siguiente</a>
+                </div>
             </div>
-        </div>
 
-        <div th:if="${reviewsPage.totalElements == 0}">
-            <p>No se encontraron resultados.</p>
-        </div>
+            <div th:if="${reviewsPage.totalElements == 0}">
+                <p>No se encontraron resultados.</p>
+            </div>
+        </main>
     </body>
 </html>

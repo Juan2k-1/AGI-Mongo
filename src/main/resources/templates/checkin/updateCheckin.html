@@ -2,11 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title th:text="${title}">Modificar Factura</title>
-        <meta charset="UTF-8">      
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" th:href="@{/css/updateBusinessStyles.css}" />
     </head>
     <body>
         <header>
-            <h1 th:text="${title}">Modificar Factura</h1>
+            <h1>Modificar Factura</h1>
         </header>
 
         <main>
@@ -19,14 +20,19 @@
                 </div>
                 <div>
                     <label for="date">Date:</label>
-                    <input type="date" id="date" th:field="*{date}" required />
+                    <input type="datetime-local" id="date" th:field="*{date}" required />
                 </div>
 
                 <button type="submit">Modificar</button>
             </form>
 
-            <p th:if="${successMessage}" th:text="${successMessage}" style="color: green;"></p>
-            <p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></p>
+            <!-- Mostrar el mensaje de éxito o error si está presente -->
+            <div th:if="${successMessage}" th:class="'message success'">
+                <p th:text="${successMessage}"></p>
+            </div>
+            <div th:if="${errorMessage}" th:class="'message error'">
+                <p th:text="${errorMessage}"></p>
+            </div>
         </main>
 
         <footer>
