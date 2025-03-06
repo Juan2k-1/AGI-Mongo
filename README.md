@@ -16,3 +16,17 @@
     <li><strong>Asynchronous Processing</strong>: Implements non-blocking data processing for faster response times.</li>
     <li><strong>Scalability Features</strong>: Designed to handle increasing data loads with horizontal scaling strategies.</li>
 </ul>
+
+<h2>Gallery</h2>
+<p>Thera are some images from the UI of the proyect</p>
+Business Management
+
+![Descripción de la imagen 1](images/imagen1.jpg)
+
+Create New Business
+
+![Descripción de la imagen 2](images/imagen2.jpg)
+
+Update Business
+
+![Descripción de la imagen 3](images/imagen3.jpg)
