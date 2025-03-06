@@ -21,12 +21,12 @@
 <p>Thera are some images from the UI of the proyect</p>
 Business Management
 
-![Descripción de la imagen 1](images/imagen1.jpg)
+![Descripción de la imagen 1](images/Captura.png)
 
 Create New Business
 
-![Descripción de la imagen 2](images/imagen2.jpg)
+![Descripción de la imagen 2](images/Captura3.png)
 
 Update Business
 
-![Descripción de la imagen 3](images/imagen3.jpg)
+![Descripción de la imagen 3](images/Captura4.png)
