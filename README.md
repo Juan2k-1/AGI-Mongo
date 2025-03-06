@@ -19,14 +19,12 @@
 
 <h2>Gallery</h2>
 <p>Thera are some images from the UI of the proyect</p>
-Business Management
 
-![Descripción de la imagen 1](images/Captura.png)
+Business Management
+![Captura](https://github.com/user-attachments/assets/5d46613a-1cca-48c8-9621-367c28caefee)
 
 Create New Business
-
-![Descripción de la imagen 2](images/Captura3.png)
+![Captura3](https://github.com/user-attachments/assets/ccbcd87a-6bae-42c4-9707-eb6aa004c63f)
 
 Update Business
-
-![Descripción de la imagen 3](images/Captura4.png)
+![Captura4](https://github.com/user-attachments/assets/4eadd559-e902-4cb0-8e74-edac998733d1)
